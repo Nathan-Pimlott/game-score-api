@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: Game Score API
+  description: API to serve game score UI
+  version: 0.0.1
+
+servers:
+  - url: http://localhost:3000
+    description: Local development server
+
+components:
+  parameters:
+    authToken:
+      in: header
+      name: token
+      required: true
+      schema:
+        type: string
+      description: Authentication token
+
+  schemas:
+    Console:
+      type: string
+      enum: [Switch, PC, SteamDeck, DS, PS4, Gameboy]
+
+    ScoreToCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        score:
+          type: integer
+        timeToComplete:
+          type: string
+        finishDate:
+          type: string
+        playedConsoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Console'
+        thoughts: string
+
+    Score:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ScoreToCreate'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+
+paths:
+  /scores:
+    get:
+      summary: Get a list of game scores
+      requestBody:
+        required: true
+        content:
+          application/json:
+            type: array
+            items:
+              $ref: '#/components/schemas/Score'
+      responses:
+        '200':
+          description: Successfully returned scores
+  /score:
+    post:
+      summary: Create a new game score
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScoreToCreate'
+      responses:
+        '201':
+          description: Score was created successfully
