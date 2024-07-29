@@ -66,6 +66,19 @@ paths:
         '200':
           description: Successfully returned scores
   /score:
+    get:
+      summary: Get the full details of a single score
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Score'
+      responses:
+        '200':
+          description: Successfully returned score
+        '404':
+          description: Score not found
     post:
       summary: Create a new game score
       requestBody:
