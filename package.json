@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "npx tsc",
-    "test": "jest",
+    "test": "jest --verbose --passWithNoTests",
     "types:check": "npx tsc --noEmit",
     "format:check": "npx prettier . --check",
     "format:write": "npx prettier . --write",
