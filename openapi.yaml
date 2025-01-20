@@ -19,7 +19,7 @@ components:
       description: Authentication token
 
   schemas:
-    Console:
+    Platform:
       type: string
       enum: [Switch, PC, SteamDeck, DS, PS4, Gameboy]
 
@@ -34,10 +34,10 @@ components:
           type: string
         finishDate:
           type: string
-        playedConsoles:
+        playedPlatforms:
           type: array
           items:
-            $ref: '#/components/schemas/Console'
+            $ref: '#/components/schemas/Platform'
         thoughts: string
 
     Score:
