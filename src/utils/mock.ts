@@ -9,7 +9,7 @@ export const mockScores: IScore[] = [
     name: 'Pokemon Scarlet/Violet',
     thoughts: {
       overview: `
-      It was a fun Pokemon game, it ran horribly on the switch and the graphics were pretty poor, but it has the charm that pokemon games usually have. They have made post game shiny hunting a lot easier than it use to be which you may see as a bad thing, but i found myself playing it for hours because it seemed possible for once. This will of course be a personal preference, but I like that if you focus, you are able to catch a shiny every half an hour or so.
+      From the API. It was a fun Pokemon game, it ran horribly on the switch and the graphics were pretty poor, but it has the charm that pokemon games usually have. They have made post game shiny hunting a lot easier than it use to be which you may see as a bad thing, but i found myself playing it for hours because it seemed possible for once. This will of course be a personal preference, but I like that if you focus, you are able to catch a shiny every half an hour or so.
       `,
       good: '',
       bad: '',

@@ -5,7 +5,7 @@ export async function getScore(req: Request, res: Response) {
   const { id } = req.params;
 
   if (!id) {
-    // Throw some error here...
+    return res.status(422).send();
   }
 
   const score = mockScores.find((s) => s.id === id);
