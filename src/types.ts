@@ -23,4 +23,5 @@ export interface IGenre {
 export interface IPlatform {
   id: string;
   name: Platform;
+  featuredScores: IScore[];
 }

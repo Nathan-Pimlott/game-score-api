@@ -78,6 +78,49 @@ export const mockScores: IScore[] = [
     finishDate: '2025-01-03',
     timeToComplete: 8,
   },
+  {
+    id: '567',
+    name: 'Octopath Traveller',
+    thoughts: {
+      overview: "It's a good game. Add some more info here eventually.",
+      good: 'There was some good things.',
+      bad: 'There was also some bad things.',
+    },
+    score: 9,
+    playedPlatforms: ['Switch', 'Steam'],
+    finishDate: '2020-05-01',
+    timeToComplete: 60,
+  },
+  {
+    id: '678',
+    name: 'Pokemon Legends Arceus',
+    thoughts: {
+      overview: `
+      A nice surprise. Add some more info here...
+      `,
+      good: 'There was some good things',
+      bad: 'There was also some bad things.',
+    },
+    score: 9,
+    playedPlatforms: ['Switch'],
+    finishDate: '2023-02-01 00:00:00',
+    timeToComplete: 40,
+  },
+  {
+    id: '678',
+    name: 'Pokemon Sword/Shield',
+    thoughts: {
+      overview: `
+      Add some details here...
+      `,
+      good: 'There was some good things',
+      bad: 'There was also some bad things.',
+    },
+    score: 7,
+    playedPlatforms: ['Switch'],
+    finishDate: '2022-01-01 00:00:00',
+    timeToComplete: 50,
+  },
 ];
 
 // Returns the same type as mockScores, but is limited to X results
@@ -88,22 +131,27 @@ export const mockPlatforms: IPlatform[] = [
   {
     id: '123',
     name: 'Steam',
+    featuredScores: [],
   },
   {
     id: '234',
     name: 'Switch',
+    featuredScores: [],
   },
   {
     id: '345',
     name: 'PS4',
+    featuredScores: [],
   },
   {
     id: '456',
     name: 'DS',
+    featuredScores: [],
   },
   {
     id: '567',
     name: 'Gameboy',
+    featuredScores: [],
   },
 ];
 

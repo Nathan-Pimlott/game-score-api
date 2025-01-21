@@ -10,11 +10,11 @@ export async function searchScore(req: Request, res: Response) {
 
   const searchText = decodeURI(encodedText as string).toLowerCase();
 
-  const score = mockScores.filter((s) =>
+  const scores = mockScores.filter((s) =>
     s.name.toLocaleLowerCase().includes(searchText)
   );
 
   return res.status(200).send({
-    score,
+    scores,
   });
 }
