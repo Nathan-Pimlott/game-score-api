@@ -1,32 +1,33 @@
 import { Request, Response } from 'express';
+import _ from 'lodash';
 
 import { query } from '../utils/db';
 import { IPlatform } from '../types';
-
-// export async function getPlatforms(req: Request, res: Response) {
-//   const platforms: IPlatform[] = await query('SELECT * FROM PLATFORM;');
-//   return res.status(200).send({ platforms });
-// }
+import { sortAsc } from '../utils/sort';
 
 export async function getPlatforms(req: Request, res: Response) {
-  const platforms: IPlatform[] = await query(`SELECT * FROM PLATFORM;`);
-  await Promise.all(
-    platforms.map(async (platform) => {
-      const latestScoresForPlatform = await query(`
-      SELECT sp.scoreId, s.name, s.score, s.finishDate 
-      FROM SCORE_PLATFORMS sp
-      JOIN SCORE s 
-      ON s.id = sp.scoreId
-      WHERE sp.platformId = '${platform.id}'
-      ORDER BY s.finishDate DESC
-      LIMIT 2;
-    `);
-      console.log({ latestScoresForPlatform });
+  const ungroupedPlatforms: any[] = await query(`
+    select p.id, p.name, sp.scoreId, s.name scoreName, s.score, s.finishDate
+    from platform p 
+    join score_platforms sp on p.id = sp.platformId 
+    join score s on s.id = sp.scoreId;
+  `);
 
-      platform.featuredScores = latestScoresForPlatform;
-    })
-  );
-  console.log({ platforms });
+  const groupedPlatforms = _.groupBy(ungroupedPlatforms, 'id');
+
+  const platforms: IPlatform[] = Object.keys(groupedPlatforms).map((id) => ({
+    id,
+    name: groupedPlatforms[id][0].name,
+    featuredScores: sortAsc(
+      groupedPlatforms[id].map(({ scoreId, scoreName, score, finishDate }) => ({
+        id: scoreId,
+        name: scoreName,
+        score,
+        finishDate,
+      })),
+      'name'
+    ),
+  }));
 
   return res.status(200).send({ platforms });
 }

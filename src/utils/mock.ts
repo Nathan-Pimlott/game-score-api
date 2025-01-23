@@ -168,7 +168,7 @@ export const mockGenres = [
   {
     id: uuid(),
     name: 'RPG',
-    examples: [
+    featuredScores: [
       { id: '123', name: 'Pokemon Scarlet/Violet' },
       { id: '234', name: 'Octopath Traveller 2' },
       { id: '345', name: 'Spider-Man Remastered' },
@@ -178,7 +178,7 @@ export const mockGenres = [
   {
     id: uuid(),
     name: 'Action',
-    examples: [
+    featuredScores: [
       { id: '123', name: 'Pokemon Scarlet/Violet' },
       { id: '345', name: 'Spider-Man Remastered' },
     ],
@@ -186,12 +186,12 @@ export const mockGenres = [
   {
     id: uuid(),
     name: 'JRPG',
-    examples: [{ id: '234', name: 'Octopath Traveller 2' }],
+    featuredScores: [{ id: '234', name: 'Octopath Traveller 2' }],
   },
   {
     id: uuid(),
     name: 'Adventure',
-    examples: [
+    featuredScores: [
       { id: '123', name: 'Pokemon Scarlet/Violet' },
       { id: '234', name: 'Octopath Traveller 2' },
     ],
@@ -199,7 +199,7 @@ export const mockGenres = [
   {
     id: uuid(),
     name: 'Open World',
-    examples: [
+    featuredScores: [
       { id: '123', name: 'Pokemon Scarlet/Violet' },
       { id: '345', name: 'Spider-Man Remastered' },
     ],

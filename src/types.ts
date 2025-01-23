@@ -5,7 +5,7 @@ export interface IScoreCompact {
   name: string;
   score: number;
   finishDate: string;
-  playedPlatforms: IPlatform[];
+  playedPlatforms?: IPlatform[];
   genres?: IGenre[];
 }
 
@@ -17,13 +17,13 @@ export interface IScore extends IScoreCompact {
 export interface IGenre {
   id: string;
   name: string;
-  examples?: { id: string; name: string }[];
+  featuredScores?: IScoreCompact[];
 }
 
 export interface IPlatform {
   id: string;
   name: Platform;
-  featuredScores?: IScore[];
+  featuredScores?: IScoreCompact[];
 }
 
 export interface IThoughts {
