@@ -15,10 +15,15 @@ export async function formatFeaturedScores(ungroupedScores: any[]) {
         timeToComplete,
         finishDate,
         playedPlatforms: sortAsc(
-          groupedScores[id].map(({ platformId, platformName }) => ({
-            id: platformId,
-            name: platformName,
-          })),
+          // This is a filter instead of map to handle cases where there
+          // is no platform for a score.
+          groupedScores[id].filter(({ platformId, platformName }) => {
+            if (platformId && platformName)
+              return {
+                id: platformId,
+                name: platformName,
+              };
+          }),
           'name'
         ),
       };
@@ -36,12 +41,17 @@ export async function formatGenres(ungroupedGenres: any[]) {
       id,
       name: groupedGenres[id][0].name,
       featuredScores: sortAsc(
-        groupedGenres[id].map(({ scoreId, scoreName, score, finishDate }) => ({
-          id: scoreId,
-          name: scoreName,
-          score,
-          finishDate,
-        })),
+        groupedGenres[id].filter(
+          ({ scoreId, scoreName, score, finishDate }) => {
+            if (scoreId)
+              return {
+                id: scoreId,
+                name: scoreName,
+                score,
+                finishDate,
+              };
+          }
+        ),
         'name'
       ),
     }));
@@ -57,12 +67,17 @@ export async function formatPlatforms(ungroupedPlatforms: any[]) {
     id,
     name: groupedPlatforms[id][0].name,
     featuredScores: sortAsc(
-      groupedPlatforms[id].map(({ scoreId, scoreName, score, finishDate }) => ({
-        id: scoreId,
-        name: scoreName,
-        score,
-        finishDate,
-      })),
+      groupedPlatforms[id].filter(
+        ({ scoreId, scoreName, score, finishDate }) => {
+          if (scoreId)
+            return {
+              id: scoreId,
+              name: scoreName,
+              score,
+              finishDate,
+            };
+        }
+      ),
       'name'
     ),
   }));
@@ -81,10 +96,13 @@ export async function formatScores(ungroupedScores: any[]) {
       timeToComplete,
       finishDate,
       playedPlatforms: sortAsc(
-        groupedScores[id].map(({ platformId, platformName }) => ({
-          id: platformId,
-          name: platformName,
-        })),
+        groupedScores[id].filter(({ platformId, platformName }) => {
+          if (platformId)
+            return {
+              id: platformId,
+              name: platformName,
+            };
+        }),
         'name'
       ),
     };
