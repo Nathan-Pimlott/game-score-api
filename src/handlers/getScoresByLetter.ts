@@ -1,15 +1,14 @@
 import { Request, Response } from 'express';
 
-import { query } from '../utils/db';
+import { getScoresByLetter } from '../services/score';
+import { formatScores } from '../utils/format';
 
-export async function getScoresByLetter(req: Request, res: Response) {
+export async function getScoresByLetterHandler(req: Request, res: Response) {
   const { letter } = req.params;
 
-  const scoresByLetter = await query(`
-      SELECT * FROM SCORE
-      WHERE name like '${letter}%'
-      ORDER BY finishDate DESC
-    `);
+  const unformattedScoresByLetter = await getScoresByLetter(letter);
+
+  const scoresByLetter = await formatScores(unformattedScoresByLetter);
 
   return res.status(200).send({
     scoresByLetter,

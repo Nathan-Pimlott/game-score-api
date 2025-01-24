@@ -1,40 +1,12 @@
 import { Request, Response } from 'express';
-import _ from 'lodash';
 
-import { query } from '../utils/db';
-import { IScore } from '../types';
-import { sortAsc } from '../utils/sort';
+import { formatFeaturedScores } from '../utils/format';
+import { getFeaturedScores } from '../services/score';
 
-export async function getFeaturedScores(req: Request, res: Response) {
-  const ungroupedScores = await query(`
-    SELECT s.*, p.id platformId, p.name platformName 
-    FROM SCORE s
-    JOIN SCORE_PLATFORMS sp ON sp.scoreId = s.id
-    JOIN PLATFORM p ON p.id = sp.platformId
-    ORDER BY s.finishDate DESC
-    LIMIT 10;
-  `);
+export async function getFeaturedScoresHandler(req: Request, res: Response) {
+  const unformattedScores = await getFeaturedScores();
 
-  const groupedScores = _.groupBy(ungroupedScores, 'id');
-
-  const featuredScores: IScore[] = Object.keys(groupedScores).map((id) => {
-    const { name, score, timeToComplete, finishDate } = groupedScores[id][0];
-
-    return {
-      id,
-      name,
-      score,
-      timeToComplete,
-      finishDate,
-      playedPlatforms: sortAsc(
-        groupedScores[id].map(({ platformId, platformName }) => ({
-          id: platformId,
-          name: platformName,
-        })),
-        'name'
-      ),
-    };
-  });
+  const featuredScores = await formatFeaturedScores(unformattedScores);
 
   return res.status(200).send({
     featuredScores,

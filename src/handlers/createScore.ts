@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 // import { IScore } from '../types';
 
 // This still needs some thought. May need its own project.
-export async function createScore(req: Request, res: Response) {
+export async function createScoreHandler(req: Request, res: Response) {
   return res.status(201).send(req.body.score);
   // const score: IScoreToCreate = req.body.score;
 
