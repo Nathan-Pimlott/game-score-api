@@ -1,13 +1,20 @@
 import { Request, Response } from 'express';
-import { IScore, IScoreToCreate } from '../types';
 
-export async function createScore(req: Request, res: Response) {
-  const score: IScoreToCreate = req.body.score;
+import { formatFeaturedScores } from '../utils/format';
+import { getFeaturedScores } from '../services/score';
 
-  const createdScore: IScore = {
-    ...score,
-    id: '123',
-  };
+export async function createScoreHandler(req: Request, res: Response) {
+  try {
+    console.log({ body: req.body });
 
-  return res.status(201).send({ score: createdScore });
+    // const formattedScore = await formatScoreToCreate(req.body);
+
+    // const createRes = await createScore(formattedScore);
+
+    return res.status(201).send({
+      // score: createRes,
+    });
+  } catch (error) {
+    return res.status(500);
+  }
 }

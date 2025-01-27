@@ -1,15 +1,31 @@
 import { Request, Response } from 'express';
 
-export async function getScore(req: Request, res: Response) {
-  return res.status(200).send({
-    score: {
-      id: '123',
-      name: 'Game 1',
-      score: 80,
-      timeToComplete: '2 weeks',
-      finishDate: '2024-07-01T00:00:00',
-      playedConsoles: ['Switch'],
-      thoughts: 'Game was alright.',
-    },
-  });
+import { getThoughtsForScore } from '../services/thought';
+import { getPlatformsForScore } from '../services/platform';
+import { getScore } from '../services/score';
+
+export async function getScoreHandler(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    const scoreRes = await getScore(id);
+
+    if (!scoreRes || !scoreRes.id) {
+      throw Error('Unable to find score by id.');
+    }
+
+    const thoughts = await getThoughtsForScore(id);
+    const platforms = await getPlatformsForScore(id);
+
+    const score = {
+      ...scoreRes,
+      thoughts,
+      platforms,
+    };
+
+    return res.status(200).send({
+      score,
+    });
+  } catch (error) {
+    return res.status(404).send();
+  }
 }

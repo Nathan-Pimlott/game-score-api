@@ -1,14 +1,34 @@
-export interface IScoreToCreate {
+export type Platform = 'Switch' | 'Steam' | 'DS' | 'PS4' | 'Gameboy';
+
+export interface IScoreCompact {
+  id: string;
   name: string;
   score: number;
-  timeToComplete: string;
   finishDate: string;
-  playedConsoles: Console[];
-  thoughts: string;
+  playedPlatforms?: IPlatform[];
+  genres?: IGenre[];
 }
 
-export interface IScore extends IScoreToCreate {
+export interface IScore extends IScoreCompact {
+  timeToComplete: number;
+  thoughts?: IThoughts[];
+}
+
+export interface IGenre {
   id: string;
+  name: string;
+  featuredScores?: IScoreCompact[];
 }
 
-export type Console = 'Switch' | 'PC' | 'SteamDeck' | 'DS' | 'PS4' | 'Gameboy';
+export interface IPlatform {
+  id: string;
+  name: Platform;
+  featuredScores?: IScoreCompact[];
+}
+
+export interface IThoughts {
+  id: string;
+  priority: number;
+  title: string;
+  body: string;
+}
