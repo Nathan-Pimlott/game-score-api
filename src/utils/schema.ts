@@ -19,11 +19,13 @@ export const genreSchema = z
   })
   .strict();
 
-export const createGenreSchema = z
-  .object({
-    name: z.string().min(2).max(100),
-  })
-  .strict();
+export const createGenreSchema = z.object({
+  body: z
+    .object({
+      name: z.string().min(2).max(100),
+    })
+    .strict(),
+});
 
 // PLATFORMS
 
@@ -34,12 +36,13 @@ export const platformSchema = z
   })
   .strict();
 
-export const createPlatformSchema = z
-  .object({
-    id: z.string().uuid(),
-    name: z.string().min(2).max(100),
-  })
-  .strict();
+export const createPlatformSchema = z.object({
+  body: z
+    .object({
+      name: z.string().min(2).max(100),
+    })
+    .strict(),
+});
 
 // SCORES
 

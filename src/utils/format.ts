@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { sortAsc } from '../utils/sort';
-import { IScore } from '../types';
+import { IGenre, IPlatform, IScore, Platform } from '../types';
 
 export async function formatFeaturedScores(ungroupedScores: any[]) {
   try {
@@ -125,6 +125,32 @@ export async function formstScoreToCreate(
       genres: unformattedScore.genres,
       playedPlatforms: unformattedScore.playedPlatforms,
       thoughts: unformattedScore.thoughts,
+    };
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatGenreToCreate(body: {
+  name: string;
+}): Promise<IGenre | false> {
+  try {
+    return {
+      id: uuid(),
+      name: body.name,
+    };
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatPlatformToCreate(body: {
+  name: Platform;
+}): Promise<IPlatform | false> {
+  try {
+    return {
+      id: uuid(),
+      name: body.name,
     };
   } catch (error) {
     return false;

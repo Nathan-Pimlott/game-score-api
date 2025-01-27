@@ -1,3 +1,4 @@
+import { IGenre } from '../types';
 import { query } from '../utils/db';
 
 export async function getGenres() {
@@ -12,5 +13,20 @@ export async function getGenres() {
     return genreRes;
   } catch (error) {
     return [];
+  }
+}
+
+export async function createGenre(body: IGenre) {
+  try {
+    const createRes = await query(`
+      insert into genre(id, name)
+      values('${body.id}', '${body.name}');
+    `);
+
+    console.log({ createRes });
+
+    return createRes;
+  } catch (error) {
+    return false;
   }
 }

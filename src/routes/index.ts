@@ -11,7 +11,13 @@ import { getGenresHandler } from '../handlers/getGenres';
 import { getPlatformsHandler } from '../handlers/getPlatforms';
 import { createScoreHandler } from '../handlers/createScore';
 import { validate } from '../utils/validate';
-import { createScoreSchema } from '../utils/schema';
+import {
+  createGenreSchema,
+  createPlatformSchema,
+  createScoreSchema,
+} from '../utils/schema';
+import { createGenreHandler } from '../handlers/createGenre';
+import { createPlatformHandler } from '../handlers/createPlatform';
 
 export function routes(app: Express) {
   middleware(app);
@@ -24,4 +30,6 @@ export function routes(app: Express) {
   app.get('/search', searchScoreHandler);
   // Admin endpoints
   app.post('/score', validate(createScoreSchema), createScoreHandler);
+  app.post('/genre', validate(createGenreSchema), createGenreHandler);
+  app.post('/platform', validate(createPlatformSchema), createPlatformHandler);
 }

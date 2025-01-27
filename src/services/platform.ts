@@ -1,3 +1,4 @@
+import { IPlatform } from '../types';
 import { query } from '../utils/db';
 
 export async function getPlatforms() {
@@ -22,5 +23,16 @@ export async function getPlatformsForScore(scoreId: string) {
     `);
   } catch (error) {
     return [];
+  }
+}
+
+export async function createPlatform(body: IPlatform) {
+  try {
+    return await query(`
+      insert into platform(id, name)
+      values('${body.id}', '${body.name}');
+    `);
+  } catch (error) {
+    return false;
   }
 }
