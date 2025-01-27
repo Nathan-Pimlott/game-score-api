@@ -1,5 +1,8 @@
 import _ from 'lodash';
+import { v4 as uuid } from 'uuid';
+
 import { sortAsc } from '../utils/sort';
+import { IScore } from '../types';
 
 export async function formatFeaturedScores(ungroupedScores: any[]) {
   try {
@@ -107,4 +110,23 @@ export async function formatScores(ungroupedScores: any[]) {
       ),
     };
   });
+}
+
+export async function formstScoreToCreate(
+  unformattedScore: any
+): Promise<IScore | false> {
+  try {
+    return {
+      id: uuid(),
+      name: unformattedScore.name,
+      score: unformattedScore.score,
+      timeToComplete: unformattedScore.timeToComplete,
+      finishDate: unformattedScore.finishDate,
+      genres: unformattedScore.genres,
+      playedPlatforms: unformattedScore.playedPlatforms,
+      thoughts: unformattedScore.thoughts,
+    };
+  } catch (error) {
+    return false;
+  }
 }

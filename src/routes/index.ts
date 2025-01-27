@@ -1,4 +1,5 @@
-import { Express } from 'express';
+import { Express, NextFunction, Request, Response } from 'express';
+
 import { middleware } from './middleware';
 
 // Handlers
@@ -9,6 +10,8 @@ import { getScoresByLetterHandler } from '../handlers/getScoresByLetter';
 import { getGenresHandler } from '../handlers/getGenres';
 import { getPlatformsHandler } from '../handlers/getPlatforms';
 import { createScoreHandler } from '../handlers/createScore';
+import { validate } from '../utils/validate';
+import { createScoreSchema } from '../utils/schema';
 
 export function routes(app: Express) {
   middleware(app);
@@ -20,5 +23,5 @@ export function routes(app: Express) {
   app.get('/platforms', getPlatformsHandler);
   app.get('/search', searchScoreHandler);
   // Admin endpoints
-  app.post('/score', createScoreHandler);
+  app.post('/score', validate(createScoreSchema), createScoreHandler);
 }

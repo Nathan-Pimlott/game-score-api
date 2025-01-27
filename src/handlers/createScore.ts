@@ -1,15 +1,20 @@
 import { Request, Response } from 'express';
-// import { IScore } from '../types';
 
-// This still needs some thought. May need its own project.
+import { formatFeaturedScores } from '../utils/format';
+import { getFeaturedScores } from '../services/score';
+
 export async function createScoreHandler(req: Request, res: Response) {
-  return res.status(201).send(req.body.score);
-  // const score: IScoreToCreate = req.body.score;
+  try {
+    console.log({ body: req.body });
 
-  // const createdScore: IScore = {
-  //   ...score,
-  //   id: '123',
-  // };
+    // const formattedScore = await formatScoreToCreate(req.body);
 
-  // return res.status(201).send({ score: createdScore });
+    // const createRes = await createScore(formattedScore);
+
+    return res.status(201).send({
+      // score: createRes,
+    });
+  } catch (error) {
+    return res.status(500);
+  }
 }
