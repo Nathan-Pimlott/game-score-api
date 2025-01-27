@@ -156,3 +156,22 @@ export async function formatPlatformToCreate(body: {
     return false;
   }
 }
+
+export async function formatScoreToCreate(
+  body: any
+): Promise<[IScore, string[], string[]] | false> {
+  try {
+    const score: IScore = {
+      id: uuid(),
+      name: body.name,
+      score: body.score,
+      timeToComplete: body.timeToComplete,
+      finishDate: body.finishDate,
+    };
+    const { playedPlatforms, genres } = body;
+
+    return [score, playedPlatforms || [], genres || []];
+  } catch (error) {
+    return false;
+  }
+}

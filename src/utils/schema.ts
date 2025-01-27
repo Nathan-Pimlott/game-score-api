@@ -53,8 +53,8 @@ export const createScoreSchema = z.object({
       score: z.number().min(1).max(10),
       timeToComplte: z.number().min(1).max(200),
       finishDate: z.date(),
-      platedPlatforms: z.array(platformSchema).min(1),
-      genres: z.array(genreSchema).min(1),
+      platedPlatforms: z.array(z.string().uuid()).min(1),
+      genres: z.array(z.string().uuid()).min(1),
       thoughts: z.array(createThoughtSchema),
     })
     .strict(),

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-import { formatScores } from '../utils/format';
-import { getScoresBySearchText } from '../services/score';
+import { formatScores } from '../../utils/format';
+import { getScoresBySearchText } from '../../services/score';
 
 export async function searchScoreHandler(req: Request, res: Response) {
   const { searchText } = req.query;

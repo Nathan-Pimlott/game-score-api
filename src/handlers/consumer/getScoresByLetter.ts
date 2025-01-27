@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-import { getScoresByLetter } from '../services/score';
-import { formatScores } from '../utils/format';
+import { getScoresByLetter } from '../../services/score';
+import { formatScores } from '../../utils/format';
 
 export async function getScoresByLetterHandler(req: Request, res: Response) {
   const { letter } = req.params;

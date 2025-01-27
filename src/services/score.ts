@@ -1,3 +1,6 @@
+import { v4 as uuid } from 'uuid';
+
+import { IScore } from '../types';
 import { query } from '../utils/db';
 
 export async function getScore(scoreId: string) {
@@ -62,5 +65,68 @@ export async function getScoresBySearchText(searchText: string) {
     `);
   } catch (error) {
     return [];
+  }
+}
+
+export async function createScore(scoreToCreate: IScore) {
+  try {
+    const { id, name, score, timeToComplete, finishDate } = scoreToCreate;
+
+    return await query(`
+      insert into score(id, name, score, timeToComplete, finishDate)
+      values(
+        '${id}',
+        '${name}',
+        '${score}',
+        '${timeToComplete}',
+        '${finishDate}'
+      )
+    `);
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function createScorePlatformsLink(
+  scoreId: string,
+  platformIds: string[]
+) {
+  try {
+    return await Promise.all(
+      platformIds.map(async (platformId) => {
+        await query(`
+        insert into score_platforms(id, scoreId, platformId)
+        values(
+          '${uuid()}',
+          '${scoreId}',
+          '${platformId}'
+        )
+      `);
+      })
+    );
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function createScoreGenresLink(
+  scoreId: string,
+  genreIds: string[]
+) {
+  try {
+    return await Promise.all(
+      genreIds.map(async (genreId) => {
+        await query(`
+        insert into score_genres(id, scoreId, genreId)
+        values(
+          '${uuid()}',
+          '${scoreId}',
+          '${genreId}'
+        )
+      `);
+      })
+    );
+  } catch (error) {
+    return false;
   }
 }
