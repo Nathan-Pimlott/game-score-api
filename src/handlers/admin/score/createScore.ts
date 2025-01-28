@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 
-import { formatScoreToCreate } from '../../utils/format';
+import { formatScoreToCreate } from '../../../utils/format';
 import {
   createScore,
   createScoreGenresLink,
   createScorePlatformsLink,
-} from '../../services/score';
+} from '../../../services/score';
 
 export async function createScoreHandler(req: Request, res: Response) {
   try {

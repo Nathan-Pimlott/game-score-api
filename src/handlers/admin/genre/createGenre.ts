@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-import { createGenre } from '../../services/genre';
-import { formatGenreToCreate } from '../../utils/format';
+import { createGenre } from '../../../services/genre';
+import { formatGenreToCreate } from '../../../utils/format';
 
 export async function createGenreHandler(req: Request, res: Response) {
   try {

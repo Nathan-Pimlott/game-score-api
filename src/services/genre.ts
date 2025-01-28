@@ -16,10 +16,19 @@ export async function getGenresWithScores() {
   }
 }
 
-export async function getGenres(limit: number, offset: number) {
+export async function getGenres(
+  limit: number,
+  offset: number,
+  orderBy: string,
+  order: string
+) {
   try {
     const genreRes = await query(`
-        select * from genre 
+        select 
+          g.*, 
+          (select count(*) from score_genres sg where sg.genreId = g.id) as scoreCount
+        from genre g
+        order by ${orderBy} ${order}
         limit ${limit} 
         offset ${offset}
     `);
@@ -42,5 +51,32 @@ export async function createGenre(body: IGenre) {
     return createRes;
   } catch (error) {
     return false;
+  }
+}
+
+export async function getAdminGenre(id: string) {
+  try {
+    const genreRes = await query(`
+      select * from genre 
+      where id = '${id}'
+  `);
+
+    // This needs to add a load more stuff in.
+
+    return genreRes;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getGenreCount(): Promise<number> {
+  try {
+    const countRes = await query('select count(*) as count from genre;');
+
+    console.log({ countRes });
+
+    return countRes[0].count;
+  } catch (error) {
+    return 0;
   }
 }

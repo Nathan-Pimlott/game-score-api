@@ -130,3 +130,54 @@ export async function createScoreGenresLink(
     return false;
   }
 }
+
+export async function getScores(
+  limit: number,
+  offset: number,
+  sortBy: string,
+  order: string
+) {
+  try {
+    console.log({ limit, offset });
+
+    const scoreRes = await query(`
+      select * from score 
+      order by ${sortBy} ${order}
+      limit ${limit} 
+      offset ${offset}
+  `);
+
+    console.log({ scoreRes });
+
+    return scoreRes;
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function getAdminScore(id: string) {
+  try {
+    const scoreRes = await query(`
+      select * from score 
+      where id = '${id}'
+  `);
+
+    // This needs to add a load more stuff in.
+
+    return scoreRes;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function getScoreCount(): Promise<number> {
+  try {
+    const countRes = await query('select count(*) as count from score;');
+
+    console.log({ countRes });
+
+    return countRes[0].count;
+  } catch (error) {
+    return 0;
+  }
+}

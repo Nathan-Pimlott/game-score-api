@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-import { createPlatform } from '../../services/platform';
-import { formatPlatformToCreate } from '../../utils/format';
+import { createPlatform } from '../../../services/platform';
+import { formatPlatformToCreate } from '../../../utils/format';
 
 export async function createPlatformHandler(req: Request, res: Response) {
   try {
