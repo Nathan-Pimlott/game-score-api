@@ -181,3 +181,40 @@ export async function getScoreCount(): Promise<number> {
     return 0;
   }
 }
+
+export async function getSearchCount(searchText: string): Promise<number> {
+  try {
+    const countRes = await query(`
+      select count(*) as count 
+      from score 
+      where name like '%${searchText}%';
+    `);
+
+    console.log({ countRes });
+
+    return countRes[0].count;
+  } catch (error) {
+    return 0;
+  }
+}
+
+export async function getAdminScoresBySearchText(
+  searchText: string,
+  limit: number,
+  offset: number,
+  sortBy: string,
+  order: string
+) {
+  try {
+    return await query(`
+      select *
+      from score
+      where name like '%${searchText}%'
+      order by ${sortBy} ${order}
+      limit ${limit} 
+      offset ${offset}
+    `);
+  } catch (error) {
+    return [];
+  }
+}

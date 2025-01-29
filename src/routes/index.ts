@@ -22,6 +22,9 @@ import { getAdminPlatformsHandler } from '../handlers/admin/platform/getPlatform
 import { getAdminPlatformHandler } from '../handlers/admin/platform/getPlatform';
 import { getAdminPlatformCountHandler } from '../handlers/admin/platform/getPlatformCount';
 
+import { getAdminSearchScoresHandler } from '../handlers/admin/search/searchScores';
+import { getAdminSearchScoreCountHandler } from '../handlers/admin/search/getScoreCount';
+
 // Validation
 import { middleware } from './middleware';
 import { validate } from '../utils/validate';
@@ -59,4 +62,7 @@ export function routes(app: Express) {
     validate(createPlatformSchema),
     createPlatformHandler
   );
+
+  app.get('/admin/search/count', getAdminSearchScoreCountHandler);
+  app.get('/admin/search', getAdminSearchScoresHandler);
 }

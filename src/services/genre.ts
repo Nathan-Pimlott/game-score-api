@@ -16,29 +16,6 @@ export async function getGenresWithScores() {
   }
 }
 
-export async function getGenres(
-  limit: number,
-  offset: number,
-  orderBy: string,
-  order: string
-) {
-  try {
-    const genreRes = await query(`
-        select 
-          g.*, 
-          (select count(*) from score_genres sg where sg.genreId = g.id) as scoreCount
-        from genre g
-        order by ${orderBy} ${order}
-        limit ${limit} 
-        offset ${offset}
-    `);
-
-    return genreRes;
-  } catch (error) {
-    return [];
-  }
-}
-
 export async function createGenre(body: IGenre) {
   try {
     const createRes = await query(`
@@ -66,6 +43,28 @@ export async function getAdminGenre(id: string) {
     return genreRes;
   } catch (error) {
     return null;
+  }
+}
+
+export async function getAdminGenres(
+  limit: number,
+  offset: number,
+  sortBy: string,
+  order: string
+) {
+  try {
+    const scoreRes = await query(`
+      select * from genre 
+      order by ${sortBy} ${order}
+      limit ${limit} 
+      offset ${offset}
+  `);
+
+    console.log({ scoreRes });
+
+    return scoreRes;
+  } catch (error) {
+    return [];
   }
 }
 
