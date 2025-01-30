@@ -51,11 +51,11 @@ export const createScoreSchema = z.object({
     .object({
       name: z.string().min(2).max(100),
       score: z.number().min(1).max(10),
-      timeToComplte: z.number().min(1).max(200),
-      finishDate: z.date(),
-      platedPlatforms: z.array(z.string().uuid()).min(1),
+      timeToComplete: z.number().min(1).max(200),
+      finishDate: z.string().date(),
+      playedPlatforms: z.array(z.string().uuid()).min(1),
       genres: z.array(z.string().uuid()).min(1),
-      thoughts: z.array(createThoughtSchema),
+      // thoughts: z.array(createThoughtSchema),
     })
     .strict(),
 });

@@ -26,7 +26,7 @@ export async function createScoreHandler(req: Request, res: Response) {
     await createScorePlatformsLink(score.id, playedPlatforms);
     await createScoreGenresLink(score.id, genres);
 
-    return res.status(201).send();
+    return res.status(201).send({ id: score.id });
   } catch (error) {
     return res.status(500);
   }
