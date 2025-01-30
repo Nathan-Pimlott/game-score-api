@@ -2,7 +2,13 @@ import _ from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { sortAsc } from '../utils/sort';
-import { IGenre, IPlatform, IScore, Platform } from '../types';
+import {
+  IGenre,
+  IPlatform,
+  IScore,
+  IThoughtToCreate,
+  Platform,
+} from '../types';
 
 export async function formatFeaturedScores(ungroupedScores: any[]) {
   try {
@@ -171,6 +177,20 @@ export async function formatScoreToCreate(
     const { playedPlatforms, genres } = body;
 
     return [score, playedPlatforms || [], genres || []];
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatThoughtToCreate(thought: IThoughtToCreate) {
+  try {
+    return {
+      id: uuid(),
+      scoreId: thought.scoreId,
+      title: thought.title,
+      body: thought.body.toString(),
+      priority: thought.priority,
+    };
   } catch (error) {
     return false;
   }

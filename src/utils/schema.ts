@@ -2,13 +2,16 @@ import { z } from 'zod';
 
 // THOUGHTS
 
-export const createThoughtSchema = z
-  .object({
-    title: z.string().max(255).min(2),
-    body: z.string().min(5),
-    priority: z.number().min(1).max(99),
-  })
-  .strict();
+export const createThoughtSchema = z.object({
+  body: z
+    .object({
+      scoreId: z.string().uuid(),
+      title: z.string().max(255).min(2),
+      body: z.string().min(5).max(10000),
+      priority: z.number().min(1).max(99),
+    })
+    .strict(),
+});
 
 // GENRES
 

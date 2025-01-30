@@ -160,11 +160,12 @@ export async function getAdminScore(id: string) {
     const scoreRes = await query(`
       select * from score 
       where id = '${id}'
+      limit 1;
   `);
 
     // This needs to add a load more stuff in.
 
-    return scoreRes;
+    return scoreRes[0];
   } catch (error) {
     return null;
   }

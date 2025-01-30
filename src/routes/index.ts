@@ -32,7 +32,11 @@ import {
   createGenreSchema,
   createPlatformSchema,
   createScoreSchema,
+  createThoughtSchema,
 } from '../utils/schema';
+import { createThoughtHandler } from '../handlers/admin/thought/createThought';
+import { getAdminThoughtsHandler } from '../handlers/admin/thought/getThoughts';
+import { getAdminScoreHandler } from '../handlers/admin/score/getScore';
 
 export function routes(app: Express) {
   middleware(app);
@@ -46,7 +50,7 @@ export function routes(app: Express) {
   // Admin endpoints
   app.get('/admin/scores', getAdminScoresHandler);
   app.get('/admin/score/count', getAdminScoreCountHandler);
-  app.get('/admin/score/:scoreId', getAdminScoresHandler);
+  app.get('/admin/score/:scoreId', getAdminScoreHandler);
   app.post('/admin/score', validate(createScoreSchema), createScoreHandler);
 
   app.get('/admin/genres', getAdminGenresHandler);
@@ -61,6 +65,13 @@ export function routes(app: Express) {
     '/admin/platform',
     validate(createPlatformSchema),
     createPlatformHandler
+  );
+
+  app.get('/admin/thoughts/:scoreId', getAdminThoughtsHandler);
+  app.post(
+    '/admin/thought',
+    validate(createThoughtSchema),
+    createThoughtHandler
   );
 
   app.get('/admin/search/count', getAdminSearchScoreCountHandler);

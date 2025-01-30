@@ -11,7 +11,7 @@ export interface IScoreCompact {
 
 export interface IScore extends IScoreCompact {
   timeToComplete: number;
-  thoughts?: IThoughts[];
+  thoughts?: IThought[];
 }
 
 export interface IGenre {
@@ -26,9 +26,13 @@ export interface IPlatform {
   featuredScores?: IScoreCompact[];
 }
 
-export interface IThoughts {
+export interface IThought {
   id: string;
   priority: number;
   title: string;
   body: string;
 }
+
+export type IThoughtToCreate = Omit<IThought, 'id'> & {
+  scoreId: string;
+};
