@@ -3,7 +3,7 @@
 create database GAME_SCORE;
 use GAME_SCORE;
 create user 'game_score_ui'@'localhost' identified by 'test123';
-grant select, insert on GAME_SCORE.* to 'game_score_ui'@'localhost';
+grant select, insert, update, delete on GAME_SCORE.* to 'game_score_ui'@'localhost';
   
 
 -- CREATE CORE TABLES
@@ -226,3 +226,5 @@ insert into score_thoughts(id, scoreId, thoughtId) values(
     (select id from score where name = 'Spider-Man Remastered'),
     (select id from thought where title = 'Spider-Man Bad')
 );
+
+select * from score_genres where scoreId = '0f738b5e-3a7e-47be-9f9c-60a78ee6abf0';

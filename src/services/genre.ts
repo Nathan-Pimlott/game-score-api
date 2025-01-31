@@ -54,7 +54,10 @@ export async function getAdminGenres(
 ) {
   try {
     const scoreRes = await query(`
-      select * from genre 
+      select 
+          g.*, 
+          (select count(*) from score_genres sg where sg.genreId = g.id) as scoreCount
+        from genre g
       order by ${sortBy} ${order}
       limit ${limit} 
       offset ${offset}

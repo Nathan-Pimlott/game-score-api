@@ -7,6 +7,7 @@ export const connect = async () => {
     database: process.env.DB_DATABASE!,
     port: parseInt(process.env.DB_PORT!),
     password: process.env.DB_PASSWORD || '',
+    connectionLimit: 10,
   });
   return connection;
 };
@@ -18,6 +19,7 @@ export async function query(query: string): Promise<any> {
     if (queryRes.length > 0) {
       return queryRes[0];
     }
+    await connection.end();
     return null;
   } catch (error) {
     console.log('Unable to run query');

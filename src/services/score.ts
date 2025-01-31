@@ -87,6 +87,55 @@ export async function createScore(scoreToCreate: IScore) {
   }
 }
 
+export async function updateScore(
+  scoreToUpdate: IScore,
+  genres: string[],
+  platforms: string[]
+) {
+  try {
+    const { id, name, score, timeToComplete, finishDate } = scoreToUpdate;
+
+    await query(`
+      update score
+      set 
+        id = '${id}',
+        name = '${name}',
+        score = '${score}',
+        timeToComplete = '${timeToComplete}',
+        finishDate = '${finishDate}'
+      where id = '${id}';
+    `);
+
+    await query(`delete from score_genres where scoreId = '${id}';`);
+    await query(`delete from score_platforms where scoreId = '${id}';`);
+
+    let scoreGenreQuery = `
+        insert ignore into score_genres (scoreId, genreId)
+        values 
+    `;
+    genres.map(
+      (g, idx) =>
+        (scoreGenreQuery += `${idx !== 0 ? ', ' : ''}('${id}', '${g}')`)
+    );
+
+    let scorePlatformQuery = `
+        insert ignore into score_platforms (scoreId, platformId)
+        values 
+    `;
+    platforms.map(
+      (p, idx) =>
+        (scorePlatformQuery += `${idx !== 0 ? ', ' : ''}('${id}', '${p}')`)
+    );
+
+    await query(scoreGenreQuery);
+    await query(scorePlatformQuery);
+
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 export async function createScorePlatformsLink(
   scoreId: string,
   platformIds: string[]
@@ -95,9 +144,8 @@ export async function createScorePlatformsLink(
     return await Promise.all(
       platformIds.map(async (platformId) => {
         await query(`
-        insert into score_platforms(id, scoreId, platformId)
+        insert into score_platforms(scoreId, platformId)
         values(
-          '${uuid()}',
           '${scoreId}',
           '${platformId}'
         )
@@ -117,9 +165,8 @@ export async function createScoreGenresLink(
     return await Promise.all(
       genreIds.map(async (genreId) => {
         await query(`
-        insert into score_genres(id, scoreId, genreId)
+        insert into score_genres(scoreId, genreId)
         values(
-          '${uuid()}',
           '${scoreId}',
           '${genreId}'
         )
@@ -163,9 +210,25 @@ export async function getAdminScore(id: string) {
       limit 1;
   `);
 
+    const genreRes = await query(`
+    select g.* from genre g
+    join score_genres sg on sg.genreId = g.id
+    where sg.scoreId = '${id}';
+  `);
+
+    const platformRes = await query(`
+    select p.* from platform p
+    join score_platforms sp on sp.platformId = p.id
+    where sp.scoreId = '${id}';
+  `);
+
     // This needs to add a load more stuff in.
 
-    return scoreRes[0];
+    return {
+      ...scoreRes[0],
+      genres: genreRes,
+      playedPlatforms: platformRes,
+    };
   } catch (error) {
     return null;
   }

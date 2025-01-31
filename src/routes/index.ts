@@ -10,7 +10,9 @@ import { getPlatformsHandler } from '../handlers/consumer/getPlatforms';
 // Admin Handlers
 import { createScoreHandler } from '../handlers/admin/score/createScore';
 import { getAdminScoresHandler } from '../handlers/admin/score/getScores';
+import { getAdminScoreHandler } from '../handlers/admin/score/getScore';
 import { getAdminScoreCountHandler } from '../handlers/admin/score/getScoreCount';
+import { updateScoreHandler } from '../handlers/admin/score/updateScore';
 
 import { createGenreHandler } from '../handlers/admin/genre/createGenre';
 import { getAdminGenresHandler } from '../handlers/admin/genre/getGenres';
@@ -21,6 +23,10 @@ import { createPlatformHandler } from '../handlers/admin/platform/createPlatform
 import { getAdminPlatformsHandler } from '../handlers/admin/platform/getPlatforms';
 import { getAdminPlatformHandler } from '../handlers/admin/platform/getPlatform';
 import { getAdminPlatformCountHandler } from '../handlers/admin/platform/getPlatformCount';
+
+import { createThoughtHandler } from '../handlers/admin/thought/createThought';
+import { getAdminThoughtsHandler } from '../handlers/admin/thought/getThoughts';
+import { updateAdminThoughtHandler } from '../handlers/admin/thought/updateThought';
 
 import { getAdminSearchScoresHandler } from '../handlers/admin/search/searchScores';
 import { getAdminSearchScoreCountHandler } from '../handlers/admin/search/getScoreCount';
@@ -34,9 +40,6 @@ import {
   createScoreSchema,
   createThoughtSchema,
 } from '../utils/schema';
-import { createThoughtHandler } from '../handlers/admin/thought/createThought';
-import { getAdminThoughtsHandler } from '../handlers/admin/thought/getThoughts';
-import { getAdminScoreHandler } from '../handlers/admin/score/getScore';
 
 export function routes(app: Express) {
   middleware(app);
@@ -52,6 +55,7 @@ export function routes(app: Express) {
   app.get('/admin/score/count', getAdminScoreCountHandler);
   app.get('/admin/score/:scoreId', getAdminScoreHandler);
   app.post('/admin/score', validate(createScoreSchema), createScoreHandler);
+  app.put('/admin/score', updateScoreHandler);
 
   app.get('/admin/genres', getAdminGenresHandler);
   app.get('/admin/genre/count', getAdminGenreCountHandler);
@@ -73,6 +77,7 @@ export function routes(app: Express) {
     validate(createThoughtSchema),
     createThoughtHandler
   );
+  app.put('/admin/thought', updateAdminThoughtHandler);
 
   app.get('/admin/search/count', getAdminSearchScoreCountHandler);
   app.get('/admin/search', getAdminSearchScoresHandler);

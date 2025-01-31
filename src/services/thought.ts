@@ -24,14 +24,29 @@ export async function createThought({ id, title, body, priority }: IThought) {
   }
 }
 
+export async function updateThought({ id, title, body, priority }: IThought) {
+  try {
+    return await query(`
+        update thought
+        set 
+          title = '${title}', 
+          body = '${body}', 
+          priority = ${priority}
+        where id = '${id}';
+    `);
+  } catch (error) {
+    return [];
+  }
+}
+
 export async function createScoreThoughtLink(
   scoreId: string,
   thoughtId: string
 ) {
   try {
     return await query(`
-        insert into score_thoughts(id, scoreId, thoughtId)
-        values(uuid(), '${scoreId}', '${thoughtId}');
+        insert into score_thoughts(scoreId, thoughtId)
+        values('${scoreId}', '${thoughtId}');
     `);
   } catch (error) {
     return [];

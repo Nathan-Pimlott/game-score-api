@@ -6,6 +6,7 @@ import {
   IGenre,
   IPlatform,
   IScore,
+  IThought,
   IThoughtToCreate,
   Platform,
 } from '../types';
@@ -182,11 +183,43 @@ export async function formatScoreToCreate(
   }
 }
 
+export async function formatScoreToUpdate(
+  body: any
+): Promise<[IScore, string[], string[]] | false> {
+  try {
+    const score: IScore = {
+      id: body.id,
+      name: body.name,
+      score: body.score,
+      timeToComplete: body.timeToComplete,
+      finishDate: body.finishDate,
+    };
+    const { playedPlatforms, genres } = body;
+
+    return [score, playedPlatforms || [], genres || []];
+  } catch (error) {
+    return false;
+  }
+}
+
 export async function formatThoughtToCreate(thought: IThoughtToCreate) {
   try {
     return {
       id: uuid(),
       scoreId: thought.scoreId,
+      title: thought.title,
+      body: thought.body.toString(),
+      priority: thought.priority,
+    };
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatThoughtToUpdate(thought: IThought) {
+  try {
+    return {
+      id: thought.id,
       title: thought.title,
       body: thought.body.toString(),
       priority: thought.priority,

@@ -23,9 +23,9 @@ export async function getPlatforms(
   try {
     const platformRes = await query(`
         select 
-          g.*, 
-          (select count(*) from score_platforms sg where sg.platformId = g.id) as scoreCount
-        from platform g
+          p.*, 
+          (select count(*) from score_platforms sp where sp.platformId = p.id) as scoreCount
+        from platform p
         order by ${orderBy} ${order}
         limit ${limit} 
         offset ${offset}
