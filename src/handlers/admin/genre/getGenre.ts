@@ -3,9 +3,9 @@ import { Request, Response } from 'express';
 import { getAdminGenre } from '../../../services/genre';
 
 export async function getAdminGenreHandler(req: Request, res: Response) {
-  const { id } = req.params;
+  const { genreId } = req.params;
 
-  const scores = await getAdminGenre(id as string);
+  const genre = await getAdminGenre(genreId as string);
 
-  return res.status(200).send({ scores });
+  return res.status(200).send({ genre });
 }

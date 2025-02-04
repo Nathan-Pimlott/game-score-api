@@ -8,7 +8,6 @@ import {
   IScore,
   IThought,
   IThoughtToCreate,
-  Platform,
 } from '../types';
 
 export async function formatFeaturedScores(ungroupedScores: any[]) {
@@ -151,12 +150,40 @@ export async function formatGenreToCreate(body: {
   }
 }
 
+export async function formatGenreToUpdate(body: {
+  id: string;
+  name: string;
+}): Promise<IGenre | false> {
+  try {
+    return {
+      id: body.id,
+      name: body.name,
+    };
+  } catch (error) {
+    return false;
+  }
+}
+
 export async function formatPlatformToCreate(body: {
-  name: Platform;
+  name: string;
 }): Promise<IPlatform | false> {
   try {
     return {
       id: uuid(),
+      name: body.name,
+    };
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatPlatformToUpdate(body: {
+  id: string;
+  name: string;
+}): Promise<IPlatform | false> {
+  try {
+    return {
+      id: body.id,
       name: body.name,
     };
   } catch (error) {

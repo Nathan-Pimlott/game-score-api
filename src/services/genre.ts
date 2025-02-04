@@ -23,9 +23,34 @@ export async function createGenre(body: IGenre) {
       values('${body.id}', '${body.name}');
     `);
 
-    console.log({ createRes });
-
     return createRes;
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function updateGenre(body: IGenre) {
+  try {
+    const updateRes = await query(`
+      update genre
+      set name = '${body.name}'
+      where id = '${body.id}';
+    `);
+
+    return updateRes;
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function deleteGenre(id: string) {
+  try {
+    const deleteRes = await query(`
+      delete from genre
+      where id = '${id}';
+    `);
+
+    return deleteRes;
   } catch (error) {
     return false;
   }
@@ -36,11 +61,9 @@ export async function getAdminGenre(id: string) {
     const genreRes = await query(`
       select * from genre 
       where id = '${id}'
-  `);
+    `);
 
-    // This needs to add a load more stuff in.
-
-    return genreRes;
+    return genreRes[0];
   } catch (error) {
     return null;
   }
@@ -63,8 +86,6 @@ export async function getAdminGenres(
       offset ${offset}
   `);
 
-    console.log({ scoreRes });
-
     return scoreRes;
   } catch (error) {
     return [];
@@ -74,8 +95,6 @@ export async function getAdminGenres(
 export async function getGenreCount(): Promise<number> {
   try {
     const countRes = await query('select count(*) as count from genre;');
-
-    console.log({ countRes });
 
     return countRes[0].count;
   } catch (error) {

@@ -40,6 +40,10 @@ import {
   createScoreSchema,
   createThoughtSchema,
 } from '../utils/schema';
+import { updateGenreHandler } from '../handlers/admin/genre/updateGenre';
+import { updatePlatformHandler } from '../handlers/admin/platform/updatePlatform';
+import { deletePlatformHandler } from '../handlers/admin/platform/deletePlatform';
+import { deleteGenreHandler } from '../handlers/admin/genre/deleteGenre';
 
 export function routes(app: Express) {
   middleware(app);
@@ -61,6 +65,8 @@ export function routes(app: Express) {
   app.get('/admin/genre/count', getAdminGenreCountHandler);
   app.get('/admin/genre/:genreId', getAdminGenreHandler);
   app.post('/admin/genre', validate(createGenreSchema), createGenreHandler);
+  app.put('/admin/genre', updateGenreHandler);
+  app.delete('/admin/genre/:genreId', deleteGenreHandler);
 
   app.get('/admin/platforms', getAdminPlatformsHandler);
   app.get('/admin/platform/count', getAdminPlatformCountHandler);
@@ -70,6 +76,8 @@ export function routes(app: Express) {
     validate(createPlatformSchema),
     createPlatformHandler
   );
+  app.put('/admin/platform', updatePlatformHandler);
+  app.delete('/admin/platform/:platformId', deletePlatformHandler);
 
   app.get('/admin/thoughts/:scoreId', getAdminThoughtsHandler);
   app.post(

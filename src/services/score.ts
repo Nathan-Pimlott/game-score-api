@@ -185,16 +185,12 @@ export async function getScores(
   order: string
 ) {
   try {
-    console.log({ limit, offset });
-
     const scoreRes = await query(`
       select * from score 
       order by ${sortBy} ${order}
       limit ${limit} 
       offset ${offset}
   `);
-
-    console.log({ scoreRes });
 
     return scoreRes;
   } catch (error) {
@@ -238,8 +234,6 @@ export async function getScoreCount(): Promise<number> {
   try {
     const countRes = await query('select count(*) as count from score;');
 
-    console.log({ countRes });
-
     return countRes[0].count;
   } catch (error) {
     return 0;
@@ -253,8 +247,6 @@ export async function getSearchCount(searchText: string): Promise<number> {
       from score 
       where name like '%${searchText}%';
     `);
-
-    console.log({ countRes });
 
     return countRes[0].count;
   } catch (error) {

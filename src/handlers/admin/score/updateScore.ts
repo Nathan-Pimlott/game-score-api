@@ -14,7 +14,6 @@ export async function updateScoreHandler(req: Request, res: Response) {
     const [score, playedPlatforms, genres] = formattedData;
 
     const updateScoreRes = await updateScore(score, genres, playedPlatforms);
-    console.log({ updateScoreRes });
 
     if (!updateScoreRes) {
       throw Error('Failed to update score.');

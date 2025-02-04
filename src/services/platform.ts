@@ -60,16 +60,27 @@ export async function createPlatform(body: IPlatform) {
   }
 }
 
+export async function updatePlatform(body: IPlatform) {
+  try {
+    const updateRes = await query(`
+      update platform
+      set name = '${body.name}'
+      where id = '${body.id}';
+    `);
+
+    return updateRes;
+  } catch (error) {
+    return false;
+  }
+}
+
 export async function getAdminPlatform(id: string) {
   try {
     const platformRes = await query(`
       select * from platform 
       where id = '${id}'
-  `);
-
-    // This needs to add a load more stuff in.
-
-    return platformRes;
+    `);
+    return platformRes[0];
   } catch (error) {
     return null;
   }
@@ -79,10 +90,20 @@ export async function getPlatformCount(): Promise<number> {
   try {
     const countRes = await query('select count(*) as count from platform;');
 
-    console.log({ countRes });
-
     return countRes[0].count;
   } catch (error) {
     return 0;
+  }
+}
+
+export async function deletePlatform(id: string) {
+  try {
+    const platformRes = await query(`
+      delete from platform 
+      where id = '${id}'
+    `);
+    return platformRes;
+  } catch (error) {
+    return null;
   }
 }

@@ -5,8 +5,6 @@ import { getThoughtsForScore } from '../../../services/thought';
 export async function getAdminThoughtsHandler(req: Request, res: Response) {
   const { scoreId = '' } = req.params;
 
-  console.log({ scoreId });
-
   const thoughts = await getThoughtsForScore(scoreId as string);
 
   return res.status(200).send({ thoughts });
