@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 
-import { getThoughtsForScore } from '../services/thought';
-import { getPlatformsForScore } from '../services/platform';
-import { getScore } from '../services/score';
+import { getThoughtsForScore } from '../../services/thought';
+import { getPlatformsForScore } from '../../services/platform';
+import { getScore } from '../../services/score';
 
 export async function getScoreHandler(req: Request, res: Response) {
   try {

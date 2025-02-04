@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
-import { formatPlatforms } from '../utils/format';
-import { getPlatforms } from '../services/platform';
+import { formatPlatforms } from '../../utils/format';
+import { getPlatformsWithScores } from '../../services/platform';
 
 export async function getPlatformsHandler(req: Request, res: Response) {
-  const unformattedPlatforms = await getPlatforms();
+  const unformattedPlatforms = await getPlatformsWithScores();
 
   const platforms = await formatPlatforms(unformattedPlatforms);
 

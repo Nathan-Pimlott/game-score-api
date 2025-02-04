@@ -1,5 +1,3 @@
-export type Platform = 'Switch' | 'Steam' | 'DS' | 'PS4' | 'Gameboy';
-
 export interface IScoreCompact {
   id: string;
   name: string;
@@ -11,7 +9,7 @@ export interface IScoreCompact {
 
 export interface IScore extends IScoreCompact {
   timeToComplete: number;
-  thoughts?: IThoughts[];
+  thoughts?: IThought[];
 }
 
 export interface IGenre {
@@ -22,13 +20,17 @@ export interface IGenre {
 
 export interface IPlatform {
   id: string;
-  name: Platform;
+  name: string;
   featuredScores?: IScoreCompact[];
 }
 
-export interface IThoughts {
+export interface IThought {
   id: string;
   priority: number;
   title: string;
   body: string;
 }
+
+export type IThoughtToCreate = Omit<IThought, 'id'> & {
+  scoreId: string;
+};

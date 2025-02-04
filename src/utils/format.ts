@@ -2,7 +2,13 @@ import _ from 'lodash';
 import { v4 as uuid } from 'uuid';
 
 import { sortAsc } from '../utils/sort';
-import { IScore } from '../types';
+import {
+  IGenre,
+  IPlatform,
+  IScore,
+  IThought,
+  IThoughtToCreate,
+} from '../types';
 
 export async function formatFeaturedScores(ungroupedScores: any[]) {
   try {
@@ -125,6 +131,125 @@ export async function formstScoreToCreate(
       genres: unformattedScore.genres,
       playedPlatforms: unformattedScore.playedPlatforms,
       thoughts: unformattedScore.thoughts,
+    };
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatGenreToCreate(body: {
+  name: string;
+}): Promise<IGenre | false> {
+  try {
+    return {
+      id: uuid(),
+      name: body.name,
+    };
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatGenreToUpdate(body: {
+  id: string;
+  name: string;
+}): Promise<IGenre | false> {
+  try {
+    return {
+      id: body.id,
+      name: body.name,
+    };
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatPlatformToCreate(body: {
+  name: string;
+}): Promise<IPlatform | false> {
+  try {
+    return {
+      id: uuid(),
+      name: body.name,
+    };
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatPlatformToUpdate(body: {
+  id: string;
+  name: string;
+}): Promise<IPlatform | false> {
+  try {
+    return {
+      id: body.id,
+      name: body.name,
+    };
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatScoreToCreate(
+  body: any
+): Promise<[IScore, string[], string[]] | false> {
+  try {
+    const score: IScore = {
+      id: uuid(),
+      name: body.name,
+      score: body.score,
+      timeToComplete: body.timeToComplete,
+      finishDate: body.finishDate,
+    };
+    const { playedPlatforms, genres } = body;
+
+    return [score, playedPlatforms || [], genres || []];
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatScoreToUpdate(
+  body: any
+): Promise<[IScore, string[], string[]] | false> {
+  try {
+    const score: IScore = {
+      id: body.id,
+      name: body.name,
+      score: body.score,
+      timeToComplete: body.timeToComplete,
+      finishDate: body.finishDate,
+    };
+    const { playedPlatforms, genres } = body;
+
+    return [score, playedPlatforms || [], genres || []];
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatThoughtToCreate(thought: IThoughtToCreate) {
+  try {
+    return {
+      id: uuid(),
+      scoreId: thought.scoreId,
+      title: thought.title,
+      body: thought.body.toString(),
+      priority: thought.priority,
+    };
+  } catch (error) {
+    return false;
+  }
+}
+
+export async function formatThoughtToUpdate(thought: IThought) {
+  try {
+    return {
+      id: thought.id,
+      title: thought.title,
+      body: thought.body.toString(),
+      priority: thought.priority,
     };
   } catch (error) {
     return false;
